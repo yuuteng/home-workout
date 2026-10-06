@@ -12,7 +12,8 @@ Live: https://yuuteng.github.io/home-workout/
 
 - Week strip and plan card for today. Tap any weekday to see that day's plan.
 - Each exercise expands into key points, common mistakes, start and end positions, and a Bilibili search for a real demo.
-- Follow-along mode: 3-second countdown, spoken rep counts at 3 s per rep, cues every few reps, 60 s rests with a 10 s warning, timed holds for the plank. Space pauses, Esc quits.
+- A 4-minute warm-up before and a 3 to 4 minute cool-down after, all standing or on a chair, no mat needed. Each can be switched off in the settings.
+- Follow-along mode: 3-second countdown, spoken rep counts at 3 s per rep, cues every few reps, 60 s rests with a 10 s warning, timed holds for the plank. One-sided moves count one side, pause to switch, then count the other. Space pauses, Esc quits.
 - Optional drum beat with adjustable tempo and volume. Voice, beat, tempo and volume are remembered.
 - The screen stays on during a session (Screen Wake Lock).
 - Works offline. Add it to the home screen and it opens like an app.
@@ -31,7 +32,7 @@ Live: https://yuuteng.github.io/home-workout/
 
 ## Changing the plan
 
-Edit `EX` (exercises per day type) and `WEEK` (which type falls on which weekday) at the top of the script in `index.html`. After adding or renaming images, update `IDS` in `sw.js` and bump `VERSION` so installed copies refresh.
+Edit `EX` (exercises per day type), `WARM` and `COOL` (warm-up and cool-down per day type) and `WEEK` (which type falls on which weekday) at the top of the script in `index.html`. After adding or renaming images, update `GIFS` and `STILLS` in `sw.js` and bump `VERSION` so installed copies refresh.
 
 ## Running locally
 

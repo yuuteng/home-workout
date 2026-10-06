@@ -112,6 +112,23 @@
   .pair span{text-align:center;font-size:12px;margin:2px 0 6px}
   .stills a{display:inline-block;margin-top:8px;color:var(--acc-ink);font-weight:600;text-decoration:none}
 
+  /* warm-up / cool-down cards */
+  .wc{grid-column:1/-1}
+  .wh{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;cursor:pointer;user-select:text;-webkit-user-select:text}
+  .thumbs{display:flex;flex:0 0 auto}
+  .thumbs img{width:40px;height:40px;border-radius:10px;border:2px solid var(--card);background:#fff;margin-left:-12px;box-shadow:0 0 0 1px var(--line)}
+  .thumbs img:first-child{margin-left:0}
+  .wt{flex:1;min-width:0}.wt b{display:block;font-size:15.5px}.wt small{color:var(--mute);font-size:12.5px}
+  .wh .more{display:inline-block;color:var(--acc-ink);font-size:13px;font-weight:600;white-space:nowrap}
+  .wl{display:none;border-top:1px solid var(--line);padding:12px;gap:10px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));background:#FFFCF8}
+  .wc.open .wl{display:grid}
+  .wm{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:center;background:var(--card);border-radius:14px;padding:6px}
+  .wm img{width:76px;height:76px;border-radius:10px;border:1px solid var(--line);background:#fff}
+  .wm b{display:block;font-size:14.5px}.wm span{display:block;color:var(--acc-ink);font-weight:600;font-size:12.5px}.wm small{display:block;color:var(--mute);font-size:12.5px;line-height:1.45}
+  @media (max-width:520px){.thumbs img:nth-child(n+4){display:none}}
+  .segs i.w{background:#F6EBDD}
+  .segs i.w.d,.segs i.w.c::after{background:#FFB59E}
+
   /* rest day */
   .restcard{background:var(--card);border-radius:18px;padding:28px 18px;text-align:center;color:var(--mute);box-shadow:var(--shadow)}
 
@@ -232,6 +249,8 @@
       <h2>跟练设置</h2>
       <div class="rows">
         <div class="row"><span>语音</span><div class="tog" id="voiceTog"><button data-v="1" class="on">开</button><button data-v="0">关</button></div></div>
+        <div class="row"><span>热身</span><div class="tog" id="warmTog"><button data-v="1" class="on">开</button><button data-v="0">关</button></div></div>
+        <div class="row"><span>放松</span><div class="tog" id="coolTog"><button data-v="1" class="on">开</button><button data-v="0">关</button></div></div>
         <div class="row"><span>节拍</span><div class="tog" id="beatTog"><button data-v="1">开</button><button data-v="0" class="on">关</button></div></div>
         <div class="row"><span>速度</span><input type="range" id="bpm" min="80" max="140" value="104" aria-label="节拍速度"><span class="val" id="bpmV">104</span></div>
         <div class="row"><span>音量</span><input type="range" id="vol" min="0" max="100" value="60" aria-label="节拍音量"><span class="val" id="volV">60</span></div>
@@ -305,12 +324,12 @@ lower:[
   points:['是屁股往后推,不是往下蹲','背部全程平直,眼睛看前下方','哑铃贴着大腿往下滑,感觉大腿后侧拉紧','到小腿中段就回,用臀部发力站直'],
   mistakes:['弯腰弓背','膝盖弯太多变成深蹲','哑铃离身体太远'],
   note:'对照终点位:髋部向后推,背部与地面约45度且平直',search:'哑铃罗马尼亚硬拉 教学'},
- {id:'lunge',name:'哑铃后撤箭步蹲',sets:3,brief:'双手持哑铃,一脚向后撤一大步下蹲再收回。每侧8次。',
-  anims:[{gif:'SSsBDwB',reps:8}],
-  points:['向后撤步,不是向前跨,对膝盖更友好','下蹲时前腿膝盖朝脚尖方向,后腿膝盖接近地面','上身保持直立,重心在前脚','前脚跟踩实站起,后脚收回'],
-  mistakes:['前膝顶过脚尖很多','身体左右晃、上身前倾','步子太小蹲不下去'],
-  note:'对照终点位:前小腿接近垂直,后膝接近地面',search:'哑铃后撤箭步蹲 教学'},
- {id:'calf',name:'单腿哑铃提踵',sets:3,brief:'站在地板上单腿做,一手持哑铃一手扶墙。每侧12次。想加幅度就脚尖踩两本厚书。',
+ {id:'split',name:'哑铃分腿蹲',sets:3,sides:true,brief:'先站成一前一后的弓步,脚不动,只做上下蹲起。双手各持一个哑铃,每侧8次。',
+  anims:[{gif:'9E25EOx',reps:8}],
+  points:['前后脚距离约一大步,后脚脚跟抬起,两脚左右分开与髋同宽','直上直下地蹲,前膝朝脚尖方向','蹲到后膝接近地面,前大腿接近水平','前脚整个脚掌踩实发力站起,脚始终不动'],
+  mistakes:['身体前倾,重心压到前脚尖','前膝内扣','两脚站在一条线上,左右晃'],
+  note:'对照终点位:前小腿接近垂直,后膝接近地面',search:'哑铃分腿蹲 教学'},
+ {id:'calf',name:'单腿哑铃提踵',sets:3,sides:true,brief:'站在地板上单腿做,一手持哑铃一手扶墙。每侧12次。想加幅度就脚尖踩两本厚书。',
   anims:[{gif:'1kB3Wmk',reps:12}],
   points:['单腿站,另一脚勾在支撑腿脚后','抬到最高停1秒,再慢慢下放','膝盖伸直但不锁死','扶墙只为平衡,不要撑着借力'],
   mistakes:['幅度太小弹着做','靠膝盖屈伸借力','下放太快'],
@@ -321,13 +340,32 @@ lower:[
   mistakes:['屁股翘起或腰塌下去','憋气'],
   note:'肩、髋、踝一条直线',search:'平板支撑 标准动作'}
 ]};
+/* 热身和放松:都站着或坐椅子做,不用躺、不用垫子。sides:左右各做一遍 sec 秒。 */
+const WARM_ALL=[
+ {gif:'uL9CsKm',name:'踝关节绕环',sec:30,sides:true,cue:'脚尖点地,顺时针、逆时针各转一半时间'},
+ {gif:'X7jbxra',name:'膝关节绕环',sec:30,cue:'双手扶膝,两个方向各转一半时间'},
+ {gif:'3uj0Ozg',name:'动态扩胸',sec:30,cue:'两臂向后打开再收回,跟着节奏'},
+ {gif:'QChZi3x',name:'深蹲上举',sec:40,cue:'徒手深蹲,站起时双臂举过头顶'},
+ {gif:'DFGXwZr',name:'世界最伟大拉伸',sec:30,sides:true,cue:'弓步撑地,同侧手肘往下压,再向上转体打开'}];
+const WARM={upper:WARM_ALL.concat([{gif:'jV65tKx',name:'肩胛俯卧撑',sec:30,cue:'手臂伸直不弯,只让肩胛骨夹紧再推开'}]),lower:WARM_ALL};
+const COOL={
+ upper:[{gif:'uOV3Itw',name:'肱三头肌拉伸',sec:30,sides:true,cue:'手肘举过头顶向后弯,另一只手轻压'},
+  {gif:'xifhB5W',name:'肩后侧拉伸',sec:30,sides:true,cue:'一只手臂横过胸前,另一只手往身上拉'},
+  {gif:'GSDioYu',name:'上背拉伸',sec:30,cue:'双手交握向前推,背部拱起'},
+  {gif:'1jXLYEw',name:'站姿侧向拉伸',sec:20,sides:true,cue:'一只手举过头顶,身体向另一侧弯'}],
+ lower:[{gif:'0mB6wHO',name:'站姿腘绳肌拉伸',sec:30,sides:true,cue:'一脚向前伸直、脚尖勾起,上身前俯,手往脚尖够'},
+  {gif:'C5jncD2',name:'站姿股四头肌拉伸',sec:30,sides:true,cue:'单腿站,手抓住另一只脚的脚背往臀部拉,可以扶墙'},
+  {gif:'QY39eBr',name:'椅子臀部拉伸',sec:30,sides:true,cue:'坐在椅子上,一只脚踝搭到另一侧膝盖上,上身前俯'},
+  {gif:'m0tCHqc',name:'扶墙小腿拉伸',sec:30,sides:true,cue:'双手扶墙,后脚跟踩实,身体前倾'}]};
+const segSec=m=>m.sec*(m.sides?2:1)+3;
+const phaseMin=list=>Math.max(1,Math.round(list.reduce((t,m)=>t+segSec(m),0)/60));
 const WEEK=[{d:'一',k:'upper'},{d:'二',k:'lower'},{d:'三',k:'upper'},{d:'四',k:'lower'},{d:'五',k:'upper'},{d:'六',k:'lower'},{d:'日',k:'rest'}];
 const LABEL={upper:'上肢',lower:'下肢',rest:'休息'};
 const gif=id=>`img/${id}.gif`, still=(id,s)=>`img/${id}-${s}.webp`;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const sideOf=ex=>(ex.id==='lunge'||ex.id==='calf')?'每侧':'';
+const sideOf=ex=>ex.sides?'每侧':'';
 const minutes=list=>{const t=list.reduce((s,e)=>s+e.sets,0);return Math.round(t*1.6+list.length*0.5);};
 
 /* ---------------- 打卡数据 ---------------- */
@@ -365,14 +403,16 @@ function renderHero(){
   if(k==='rest'){h.className='hero rest';h.innerHTML=`<small>周日</small><h2>休息日</h2><div class="meta"><span>什么都不用练,想动的话散步 20 分钟</span></div><button class="go" disabled>今天不练</button>`;return;}
   const list=EX[k], sets=list.reduce((s,e)=>s+e.sets,0);
   h.className='hero';
+  const extra=[prefs.warm?`热身 ${phaseMin(WARM[k])} 分`:'',prefs.cool?`放松 ${phaseMin(COOL[k])} 分`:''].filter(Boolean);
   h.innerHTML=`<small>${LABEL[k]}日 · ${list.length} 个动作</small><h2>${sets} 组 · 约 ${minutes(list)} 分钟</h2>
-    <div class="meta"><span>组间休息 60 秒</span><span>语音报数</span></div>
+    <div class="meta"><span>组间休息 60 秒</span>${extra.map(x=>`<span>+ ${x}</span>`).join('')}</div>
     <button class="go" id="startBtn">开始跟练<span class="key">空格</span></button>`;
   $('startBtn').onclick=startFollow;
 }
 function renderEx(){
   const k=WEEK[selected].k, box=$('exList');box.innerHTML='';
   if(k==='rest'){box.innerHTML='<div class="restcard">周日休息。明天周一是上肢日。</div>';return;}
+  if(prefs.warm)box.appendChild(phaseCard('练前热身',WARM[k]));
   EX[k].forEach(ex=>{
     const rx=ex.hold?`${ex.sets}×${ex.hold}″`:`${ex.sets}×${ex.anims.map(a=>a.reps).join('+')}`, side=sideOf(ex);
     const c=document.createElement('article');c.className='xc';
@@ -390,6 +430,17 @@ function renderEx(){
     hd.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}};
     box.appendChild(c);
   });
+  if(prefs.cool)box.appendChild(phaseCard('练后放松',COOL[k]));
+}
+function phaseCard(title,list){
+  const c=document.createElement('article');c.className='xc wc';
+  c.innerHTML=`<div class="wh" role="button" tabindex="0" aria-expanded="false"><span class="thumbs">${list.map(m=>`<img src="${gif(m.gif)}" alt="" loading="lazy">`).join('')}</span>
+    <span class="wt"><b>${title}</b><small>${list.length} 个动作 · 约 ${phaseMin(list)} 分钟 · 不用躺下</small></span><span class="more">展开 ↓</span></div>
+    <div class="wl">${list.map(m=>`<div class="wm"><img src="${gif(m.gif)}" alt="${esc(m.name)}" loading="lazy"><div><b>${esc(m.name)}</b><span>${m.sides?'每侧 ':''}${m.sec} 秒</span><small>${esc(m.cue)}</small></div></div>`).join('')}</div>`;
+  const hd=c.querySelector('.wh'),flip=()=>{const o=c.classList.toggle('open');hd.setAttribute('aria-expanded',o);c.querySelector('.more').textContent=o?'收起 ↑':'展开 ↓';};
+  hd.onclick=()=>{if(String(getSelection()||'').trim())return;flip();};
+  hd.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}};
+  return c;
 }
 function renderCal(){
   const done=checkins.has(todayStr), b=$('ckToday');
@@ -408,6 +459,10 @@ function renderCal(){
     e.title=checkins.has(s)?'点一下取消':'点一下补打卡';e.onclick=()=>toggleCk(s);cal.appendChild(e);}
 }
 function renderAll(){renderHeader();renderWeek();renderHero();renderEx();renderCal();}
+/* ---------------- 设置(存本机) ---------------- */
+const SET_KEY='home-workout-settings';
+const prefs=Object.assign({voice:true,beat:false,bpm:104,vol:60,warm:true,cool:true},(()=>{try{return JSON.parse(localStorage.getItem(SET_KEY))||{};}catch(e){return {};}})());
+function savePrefs(){try{localStorage.setItem(SET_KEY,JSON.stringify(prefs));}catch(e){}}
 renderAll();
 // Roll over to a new day when the page stays open past midnight.
 setInterval(()=>{const n=new Date();if(ymd(n)!==todayStr){const keep=selected===todayIdx;now=n;todayStr=ymd(n);todayIdx=(n.getDay()+6)%7;if(keep)selected=todayIdx;calY=n.getFullYear();calM=n.getMonth();if(!F.running)renderAll();}},60000);
@@ -418,13 +473,11 @@ $('calNext').onclick=()=>{calM++;if(calM>11){calM=0;calY++;}renderCal();};
 $('ckExport').onclick=async()=>{const s=JSON.stringify([...checkins].sort());try{await navigator.clipboard.writeText(s);alert('已复制到剪贴板,粘贴到备忘录里保存即可。');}catch(e){prompt('复制下面的内容保存:',s);}};
 $('ckImport').onclick=()=>{const s=prompt('粘贴之前导出的记录:');if(!s)return;try{JSON.parse(s).forEach(x=>{if(/^\d{4}-\d{2}-\d{2}$/.test(x))checkins.add(x);});saveCk();renderAll();}catch(e){alert('格式不对,应该是导出时的那段文字。');}};
 
-/* ---------------- 设置(存本机) ---------------- */
-const SET_KEY='home-workout-settings';
-const prefs=Object.assign({voice:true,beat:false,bpm:104,vol:60},(()=>{try{return JSON.parse(localStorage.getItem(SET_KEY))||{};}catch(e){return {};}})());
-function savePrefs(){try{localStorage.setItem(SET_KEY,JSON.stringify(prefs));}catch(e){}}
 function tog(id,key,on){const el=$(id);const paint=()=>el.querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===prefs[key]));
   el.querySelectorAll('button').forEach(b=>b.onclick=()=>{prefs[key]=b.dataset.v==='1';savePrefs();paint();on&&on(prefs[key]);});paint();}
 tog('voiceTog','voice',v=>{if(!v)hush();});
+tog('warmTog','warm',()=>{renderHero();renderEx();});
+tog('coolTog','cool',()=>{renderHero();renderEx();});
 tog('beatTog','beat',v=>{if(F.running&&!F.paused){v?beatStart():beatStop();}});
 $('bpm').value=prefs.bpm;$('bpmV').textContent=prefs.bpm;$('vol').value=prefs.vol;$('volV').textContent=prefs.vol;
 $('bpm').oninput=e=>{prefs.bpm=+e.target.value;$('bpmV').textContent=prefs.bpm;savePrefs();};
@@ -458,17 +511,20 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 /* ---------------- 跟练引擎 ---------------- */
 const F={running:false,paused:false,queue:[],i:0,timer:null,restSec:60,tempo:3,works:0};
 function buildQueue(k){const q=[];const list=EX[k];
+  if(prefs.warm)WARM[k].forEach((m,i,a)=>q.push({type:'timed',phase:'热身',m,idx:i+1,n:a.length}));
   list.forEach((ex,ei)=>{for(let s=1;s<=ex.sets;s++){q.push({type:'work',ex,set:s});
     const last=ei===list.length-1&&s===ex.sets;
     if(!last)q.push({type:'rest',next:s<ex.sets?ex:list[ei+1],nextSet:s<ex.sets?s+1:1});}});
+  if(prefs.cool)COOL[k].forEach((m,i,a)=>q.push({type:'timed',phase:'放松',m,idx:i+1,n:a.length}));
   return q;}
+function segIndex(i){let n=-1;for(let j=0;j<=i&&j<F.queue.length;j++)if(F.queue[j].type!=='rest')n++;return F.queue[i]&&F.queue[i].type==='rest'?n+1:n;}
 function workIndex(i){let n=-1;for(let j=0;j<=i&&j<F.queue.length;j++)if(F.queue[j].type==='work')n++;return n;}
-function paintSegs(p){const cur=F.queue[F.i]&&F.queue[F.i].type==='rest'?workIndex(F.i)+1:workIndex(F.i);
-  [...$('segs').children].forEach((s,j)=>{s.className=j<cur?'d':j===cur?'c':'';if(j===cur)s.style.setProperty('--p',(p||0)+'%');});}
-function showImg(a){$('fImg').src=gif(a.gif);}
+function paintSegs(p){const cur=segIndex(F.i);
+  [...$('segs').children].forEach((s,j)=>{s.className=(j<cur?'d':j===cur?'c':'')+(s.dataset.w?' w':'');if(j===cur)s.style.setProperty('--p',(p||0)+'%');});}
+function showImg(g){$('fImg').src=gif(g);}
 function startFollow(){const k=WEEK[selected].k;if(k==='rest'||F.running)return;
   ac();F.queue=buildQueue(k);F.i=0;F.running=true;F.paused=false;F.works=F.queue.filter(q=>q.type==='work').length;
-  $('segs').innerHTML='<i></i>'.repeat(F.works);
+  $('segs').innerHTML=F.queue.filter(q=>q.type!=='rest').map(q=>q.type==='timed'?'<i data-w="1"></i>':'<i></i>').join('');
   $('fPause').hidden=false;$('fSkip').hidden=false;$('fCheck').hidden=true;$('fPause').firstChild.textContent='暂停 ';
   $('follow').classList.add('on');document.body.style.overflow='hidden';
   keepAwake();beatStart();runItem();}
@@ -478,39 +534,63 @@ $('fCheck').onclick=()=>{if(!checkins.has(todayStr)){checkins.add(todayStr);save
 $('fPause').onclick=()=>{if(!F.running)return;F.paused=!F.paused;$('fPause').firstChild.textContent=F.paused?'继续 ':'暂停 ';if(F.paused){beatStop();hush();}else beatStart();};
 $('fSkip').onclick=()=>{if(!F.running)return;clearInterval(F.timer);nextItem();};
 function nextItem(){F.i++;if(F.i>=F.queue.length){finish();return;}runItem();}
-function finish(){paintSegs(100);[...$('segs').children].forEach(s=>s.className='d');
+function finish(){[...$('segs').children].forEach(s=>s.className='d'+(s.dataset.w?' w':''));
   $('fWhere').textContent='全部完成';$('fName').textContent='今天练完了';$('fSet').textContent='';$('fPhase').textContent='';$('fBig').textContent='✓';$('fBig').className='f-big';
   $('fCue').textContent='记一下今天的重量和次数。明天见。';say('今天练完了,辛苦');clearInterval(F.timer);F.running=false;beatStop();letSleep();
   $('fPause').hidden=true;$('fSkip').hidden=true;$('fCheck').hidden=false;}
 function tick(fn){clearInterval(F.timer);F.timer=setInterval(()=>{if(!F.paused)fn();},1000);}
-function where(){const w=workIndex(F.i);const it=F.queue[F.i];const list=EX[WEEK[selected].k];const ex=it.type==='work'?it.ex:it.next;
+function where(){const it=F.queue[F.i];
+  if(it.type==='timed')return `${it.phase} ${it.idx} / ${it.n}`;
+  const w=workIndex(F.i),list=EX[WEEK[selected].k],ex=it.type==='work'?it.ex:it.next;
   return `动作 ${list.indexOf(ex)+1} / ${list.length} · 进度 ${Math.min(w+1+(it.type==='rest'?1:0),F.works)} / ${F.works} 组`;}
+const secs=n=>`${n}<small>秒</small>`;
 function runItem(){
   const it=F.queue[F.i];$('fWhere').textContent=where();paintSegs(0);
+  if(it.type==='timed'){
+    const m=it.m,first=it.idx===1;
+    $('fName').textContent=m.name;$('fSet').textContent=`${it.phase} ${it.idx} / ${it.n}`;$('fBig').className='f-big rest';
+    $('fPhase').textContent=m.sides?`每侧 ${m.sec} 秒`:`${m.sec} 秒`;$('fCue').textContent=m.cue;showImg(m.gif);
+    let pre=3;$('fBig').innerHTML=secs(pre);say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+m.name);
+    tick(()=>{pre--;if(pre>0){$('fBig').innerHTML=secs(pre);return;}
+      clearInterval(F.timer);beep(1320,0.12);
+      const total=m.sec*(m.sides?2:1);let left=total,s=m.sec;$('fBig').innerHTML=secs(s);
+      if(m.sides)$('fPhase').textContent=`第一侧 · ${m.sec} 秒`;
+      tick(()=>{left--;s--;paintSegs((total-left)/total*100);
+        if(m.sides&&left===m.sec){s=m.sec;beep(880);say('换边');$('fPhase').textContent=`换另一侧 · ${m.sec} 秒`;}
+        $('fBig').innerHTML=secs(s);
+        if(left>0&&left<=3)beep(880);
+        if(left<=0){clearInterval(F.timer);beep(1320,0.15);setTimeout(nextItem,600);}});
+    });
+    return;}
   if(it.type==='rest'){
     $('fName').textContent='休息';$('fSet').textContent='';$('fBig').className='f-big rest';
-    $('fPhase').textContent=`下一组:${it.next.name} 第 ${it.nextSet} 组`;$('fCue').textContent=it.next.points[0];showImg(it.next.anims[0]);
+    $('fPhase').textContent=`下一组:${it.next.name} 第 ${it.nextSet} 组`;$('fCue').textContent=it.next.points[0];showImg(it.next.anims[0].gif);
     let s=F.restSec;$('fBig').textContent=s;say(`休息${F.restSec}秒,下一组${it.next.name}`);
     tick(()=>{s--;$('fBig').textContent=s;if(s===10){beep(660);say('还有10秒,准备');}if(s<=3&&s>0)beep(880);if(s<=0){beep(1320,0.15);nextItem();}});
     return;}
   const ex=it.ex;$('fName').textContent=ex.name;$('fSet').textContent=`第 ${it.set} / ${ex.sets} 组`;$('fBig').className='f-big';
-  let pre=3;$('fPhase').textContent='准备';$('fBig').textContent=pre;$('fCue').textContent=ex.points[0];showImg(ex.anims[0]);say(`${ex.name},第${it.set}组,准备`);
+  let pre=3;$('fPhase').textContent='准备';$('fBig').textContent=pre;$('fCue').textContent=ex.points[0];showImg(ex.anims[0].gif);say(`${ex.name},第${it.set}组,准备`);
   tick(()=>{pre--;beep(660);if(pre>0)$('fBig').textContent=pre;else{clearInterval(F.timer);work(it);}});
 }
 function work(it){
   const ex=it.ex,cues=ex.points;let ci=1;
-  if(ex.hold){let s=ex.hold;$('fPhase').textContent='保持';$('fBig').innerHTML=`${s}<small>秒</small>`;beep(1320,0.15);say('开始');
-    tick(()=>{s--;$('fBig').innerHTML=`${s}<small>秒</small>`;paintSegs((ex.hold-s)/ex.hold*100);
+  if(ex.hold){let s=ex.hold;$('fPhase').textContent='保持';$('fBig').innerHTML=secs(s);beep(1320,0.15);say('开始');
+    tick(()=>{s--;$('fBig').innerHTML=secs(s);paintSegs((ex.hold-s)/ex.hold*100);
       if(s%12===0&&ci<cues.length){$('fCue').textContent=cues[ci];say(cues[ci]);ci++;}
       if(s===10)say('还有10秒');if(s<=3&&s>0)beep(880);if(s<=0){beep(1320,0.2);say('放松');clearInterval(F.timer);setTimeout(nextItem,1200);}});
     return;}
-  const a=ex.anims[0];let rep=0,sec=0;const side=sideOf(ex);
-  showImg(a);$('fPhase').textContent=`每次 ${F.tempo} 秒,下去慢,起来快${side?' · '+side:''}`;$('fBig').innerHTML=`0<small>/ ${a.reps}</small>`;say('开始');beep(1320,0.15);
-  tick(()=>{sec++;
-    if(sec%F.tempo===1){rep++;$('fBig').innerHTML=`${rep}<small>/ ${a.reps}</small>`;paintSegs(rep/a.reps*100);beep(rep===a.reps?1100:880);say(String(rep));
-      if(rep%4===0&&ci<cues.length){$('fCue').textContent=cues[ci];ci++;}}
-    else if(sec%F.tempo===2)beep(520,0.05,0.12);
-    if(rep>=a.reps&&sec%F.tempo===0){clearInterval(F.timer);say('这组完成');setTimeout(nextItem,1000);}});
+  // Exercises done per side count every rep on one side, pause to switch, then the other side.
+  const a=ex.anims[0],passes=ex.sides?2:1;let pass=0,rep=0,sec=0;
+  const label=()=>ex.sides?(pass===0?'第一侧 · ':'另一侧 · '):'';
+  const start=()=>{rep=0;sec=0;showImg(a.gif);$('fPhase').textContent=`${label()}每次 ${F.tempo} 秒,下去慢,起来快`;$('fBig').innerHTML=`0<small>/ ${a.reps}</small>`;beep(1320,0.15);
+    tick(()=>{sec++;
+      if(sec%F.tempo===1){rep++;$('fBig').innerHTML=`${rep}<small>/ ${a.reps}</small>`;paintSegs((pass*a.reps+rep)/(passes*a.reps)*100);beep(rep===a.reps?1100:880);say(String(rep));
+        if(rep%4===0&&ci<cues.length){$('fCue').textContent=cues[ci];ci++;}}
+      else if(sec%F.tempo===2)beep(520,0.05,0.12);
+      if(rep>=a.reps&&sec%F.tempo===0){clearInterval(F.timer);pass++;
+        if(pass<passes){say('换另一侧');$('fPhase').textContent='换另一侧';$('fBig').textContent='换';setTimeout(()=>{if(F.running)start();},3000);}
+        else{say('这组完成');setTimeout(nextItem,1000);}}});};
+  say('开始');start();
 }
 document.addEventListener('keydown',e=>{
   if(e.target.matches&&e.target.matches('input,textarea'))return;
