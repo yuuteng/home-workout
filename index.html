@@ -566,8 +566,7 @@ function runItem(){
     const m=it.m,first=it.idx===1;
     $('fName').textContent=m.name;$('fSet').textContent=`${it.phase} ${it.idx} / ${it.n}`;$('fBig').className='f-big rest';
     $('fPhase').textContent=m.sides?`每侧 ${m.sec} 秒`:`${m.sec} 秒`;$('fCue').textContent=m.cue;showImg(m.gif);
-    const prev=F.queue[F.i-1],toMat=m.floor&&!(prev&&prev.type==='timed'&&prev.m.floor);
-    let pre=toMat?10:3;$('fBig').innerHTML=secs(pre);
+    let pre=3;$('fBig').innerHTML=secs(pre);
     say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+m.name);
     tick(()=>{pre--;if(pre>0){$('fBig').innerHTML=secs(pre);return;}
       clearInterval(F.timer);beep(1320,0.12);
