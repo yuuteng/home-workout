@@ -225,7 +225,7 @@
     </header>
 
     <section class="week panel" aria-label="本周">
-      <h2>本周<span style="color:var(--mute);font-weight:400;font-size:12px">点一天看那天的计划</span></h2>
+      <h2>本周</h2>
       <div class="days" id="days"></div>
     </section>
 
@@ -245,7 +245,7 @@
         <span class="grow"></span>
         <button class="ck-today" id="ckToday">今天打卡</button>
       </div>
-      <div class="cal-foot"><span>点日期可以补打卡或取消</span><span class="grow"></span><button class="chipbtn" id="ckExport">导出</button><button class="chipbtn" id="ckImport">导入</button></div>
+      <div class="cal-foot"><span class="grow"></span><button class="chipbtn" id="ckExport">导出</button><button class="chipbtn" id="ckImport">导入</button></div>
       <div class="warn" id="ckWarn" hidden>这个浏览器不允许网页保存数据,打卡记录关掉页面就会丢。请用「导出」手动备份。</div>
     </section>
 
@@ -362,7 +362,6 @@ const COOL={
   {gif:'99rWm7w',name:'仰卧腘绳肌拉伸',sec:30,sides:true,floor:true,cue:'躺下抬起一条腿,双手抱住小腿往身上拉,膝盖尽量伸直'},
   {gif:'BWnJR72',name:'卧姿股四头肌拉伸',sec:30,sides:true,floor:true,cue:'趴着或侧躺都行,手抓住同侧脚背往臀部拉,大腿前侧有拉伸感'}]};
 const segSec=m=>m.sec*(m.sides?2:1)+3;
-const floorNote=l=>{const n=l.filter(m=>m.floor).length;return n?`后 ${n} 个在垫子上做`:'不用躺下';};
 const phaseMin=list=>Math.max(1,Math.round(list.reduce((t,m)=>t+segSec(m),0)/60));
 const WEEK=[{d:'一',k:'upper'},{d:'二',k:'lower'},{d:'三',k:'upper'},{d:'四',k:'lower'},{d:'五',k:'upper'},{d:'六',k:'lower'},{d:'日',k:'rest'}];
 const LABEL={upper:'上肢',lower:'下肢',rest:'休息'};
@@ -418,10 +417,10 @@ function renderEx(){
   const k=WEEK[selected].k, box=$('exList');box.innerHTML='';
   if(k==='rest'){box.innerHTML='<div class="restcard">周日休息。明天周一是上肢日。</div>';return;}
   const list=EX[k], sets=list.reduce((t,e)=>t+e.sets,0);
-  if(prefs.warm)box.appendChild(section('warm','练前热身',`${WARM[k].length} 个动作 · 约 ${phaseMin(WARM[k])} 分钟 · ${floorNote(WARM[k])}`,WARM[k].map(m=>m.gif),moveGrid(WARM[k])));
+  if(prefs.warm)box.appendChild(section('warm','练前热身',`${WARM[k].length} 个动作 · 约 ${phaseMin(WARM[k])} 分钟`,WARM[k].map(m=>m.gif),moveGrid(WARM[k])));
   const grid=document.createElement('div');grid.className='xl';list.forEach(ex=>grid.appendChild(exCard(ex)));
   box.appendChild(section('main','正式训练',`${list.length} 个动作 · ${sets} 组 · 约 ${minutes(list)} 分钟`,list.map(e=>e.anims[0].gif),grid));
-  if(prefs.cool)box.appendChild(section('cool','练后放松',`${COOL[k].length} 个动作 · 约 ${phaseMin(COOL[k])} 分钟 · ${floorNote(COOL[k])}`,COOL[k].map(m=>m.gif),moveGrid(COOL[k])));
+  if(prefs.cool)box.appendChild(section('cool','练后放松',`${COOL[k].length} 个动作 · 约 ${phaseMin(COOL[k])} 分钟`,COOL[k].map(m=>m.gif),moveGrid(COOL[k])));
 }
 // Foldable section; folded state is remembered on this device, everything starts open.
 const FOLD_KEY='home-workout-folded';
@@ -569,8 +568,7 @@ function runItem(){
     $('fPhase').textContent=m.sides?`每侧 ${m.sec} 秒`:`${m.sec} 秒`;$('fCue').textContent=m.cue;showImg(m.gif);
     const prev=F.queue[F.i-1],toMat=m.floor&&!(prev&&prev.type==='timed'&&prev.m.floor);
     let pre=toMat?10:3;$('fBig').innerHTML=secs(pre);
-    if(toMat)$('fPhase').textContent='铺好垫子,接下来都在垫子上做';
-    say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+(toMat?'铺好垫子,':'')+m.name);
+    say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+m.name);
     tick(()=>{pre--;if(pre>0){$('fBig').innerHTML=secs(pre);return;}
       clearInterval(F.timer);beep(1320,0.12);
       const total=m.sec*(m.sides?2:1);let left=total,s=m.sec;$('fBig').innerHTML=secs(s);
