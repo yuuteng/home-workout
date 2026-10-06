@@ -129,6 +129,7 @@
   .mv img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)}
   .mv-t{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:8px 4px 2px;flex-wrap:wrap}
   .mv .nm{font-weight:700;font-size:15px}
+  .mv .mat{font-style:normal;font-size:11px;font-weight:600;color:var(--mute);border:1px solid var(--line-2);border-radius:99px;padding:0 6px;margin-left:6px;vertical-align:2px}
   .mv .dose{color:var(--acc-ink);font-weight:700;font-size:13px;white-space:nowrap}
   .mv p{margin:0 4px;color:var(--mute);font-size:12.5px;line-height:1.45}
   @media (min-width:960px){.mv .nm{font-size:16.5px}.mv p{font-size:13px}}
@@ -345,24 +346,25 @@ lower:[
   mistakes:['屁股翘起或腰塌下去','憋气'],
   note:'肩、髋、踝一条直线',search:'平板支撑 标准动作'}
 ]};
-/* 热身和放松:都站着或坐椅子做,不用躺、不用垫子。sides:左右各做一遍 sec 秒。 */
+/* 热身和放松。sides:左右各做一遍 sec 秒。floor:在垫子上做,要连在一起放到最后,只铺一次垫子。 */
 const WARM_ALL=[
  {gif:'uL9CsKm',name:'踝关节绕环',sec:30,sides:true,cue:'脚尖点地,顺时针、逆时针各转一半时间'},
  {gif:'X7jbxra',name:'膝关节绕环',sec:30,cue:'双手扶膝,两个方向各转一半时间'},
  {gif:'3uj0Ozg',name:'动态扩胸',sec:30,cue:'两臂向后打开再收回,跟着节奏'},
  {gif:'QChZi3x',name:'深蹲上举',sec:40,cue:'徒手深蹲,站起时双臂举过头顶'},
- {gif:'DFGXwZr',name:'世界最伟大拉伸',sec:30,sides:true,cue:'弓步撑地,同侧手肘往下压,再向上转体打开'}];
+ {gif:'DFGXwZr',name:'弓步下压拉伸',sec:30,sides:true,cue:'后腿伸直成弓步下压,双手撑到前脚两侧,再把臀部往后移、前腿伸直,回到弓步,慢慢来回'}];
 const WARM={upper:WARM_ALL.concat([{gif:'jV65tKx',name:'肩胛俯卧撑',sec:30,cue:'手臂伸直不弯,只让肩胛骨夹紧再推开'}]),lower:WARM_ALL};
 const COOL={
  upper:[{gif:'uOV3Itw',name:'肱三头肌拉伸',sec:30,sides:true,cue:'手肘举过头顶向后弯,另一只手轻压'},
   {gif:'xifhB5W',name:'肩后侧拉伸',sec:30,sides:true,cue:'一只手臂横过胸前,另一只手往身上拉'},
   {gif:'GSDioYu',name:'上背拉伸',sec:30,cue:'双手交握向前推,背部拱起'},
   {gif:'1jXLYEw',name:'站姿侧向拉伸',sec:20,sides:true,cue:'一只手举过头顶,身体向另一侧弯'}],
- lower:[{gif:'0mB6wHO',name:'站姿腘绳肌拉伸',sec:30,sides:true,cue:'一脚向前伸直、脚尖勾起,上身前俯,手往脚尖够'},
-  {gif:'C5jncD2',name:'站姿股四头肌拉伸',sec:30,sides:true,cue:'单腿站,手抓住另一只脚的脚背往臀部拉,可以扶墙'},
-  {gif:'QY39eBr',name:'椅子臀部拉伸',sec:30,sides:true,cue:'坐在椅子上,一只脚踝搭到另一侧膝盖上,上身前俯'},
-  {gif:'m0tCHqc',name:'扶墙小腿拉伸',sec:30,sides:true,cue:'双手扶墙,后脚跟踩实,身体前倾'}]};
+ lower:[{gif:'m0tCHqc',name:'扶墙小腿拉伸',sec:30,sides:true,cue:'双手扶墙,后脚跟踩实,身体前倾'},
+  {gif:'DeDThfG',name:'坐姿臀部拉伸',sec:30,sides:true,floor:true,cue:'坐在垫子上,一条腿跨过另一条腿,抱住膝盖往胸口拉并转体'},
+  {gif:'99rWm7w',name:'仰卧腘绳肌拉伸',sec:30,sides:true,floor:true,cue:'躺下抬起一条腿,双手抱住小腿往身上拉,膝盖尽量伸直'},
+  {gif:'BWnJR72',name:'卧姿股四头肌拉伸',sec:30,sides:true,floor:true,cue:'趴着或侧躺都行,手抓住同侧脚背往臀部拉,大腿前侧有拉伸感'}]};
 const segSec=m=>m.sec*(m.sides?2:1)+3;
+const floorNote=l=>{const n=l.filter(m=>m.floor).length;return n?`后 ${n} 个在垫子上做`:'不用躺下';};
 const phaseMin=list=>Math.max(1,Math.round(list.reduce((t,m)=>t+segSec(m),0)/60));
 const WEEK=[{d:'一',k:'upper'},{d:'二',k:'lower'},{d:'三',k:'upper'},{d:'四',k:'lower'},{d:'五',k:'upper'},{d:'六',k:'lower'},{d:'日',k:'rest'}];
 const LABEL={upper:'上肢',lower:'下肢',rest:'休息'};
@@ -418,10 +420,10 @@ function renderEx(){
   const k=WEEK[selected].k, box=$('exList');box.innerHTML='';
   if(k==='rest'){box.innerHTML='<div class="restcard">周日休息。明天周一是上肢日。</div>';return;}
   const list=EX[k], sets=list.reduce((t,e)=>t+e.sets,0);
-  if(prefs.warm)box.appendChild(section('warm','练前热身',`${WARM[k].length} 个动作 · 约 ${phaseMin(WARM[k])} 分钟 · 不用躺下`,WARM[k].map(m=>m.gif),moveGrid(WARM[k])));
+  if(prefs.warm)box.appendChild(section('warm','练前热身',`${WARM[k].length} 个动作 · 约 ${phaseMin(WARM[k])} 分钟 · ${floorNote(WARM[k])}`,WARM[k].map(m=>m.gif),moveGrid(WARM[k])));
   const grid=document.createElement('div');grid.className='xl';list.forEach(ex=>grid.appendChild(exCard(ex)));
   box.appendChild(section('main','正式训练',`${list.length} 个动作 · ${sets} 组 · 约 ${minutes(list)} 分钟`,list.map(e=>e.anims[0].gif),grid));
-  if(prefs.cool)box.appendChild(section('cool','练后放松',`${COOL[k].length} 个动作 · 约 ${phaseMin(COOL[k])} 分钟 · 不用躺下`,COOL[k].map(m=>m.gif),moveGrid(COOL[k])));
+  if(prefs.cool)box.appendChild(section('cool','练后放松',`${COOL[k].length} 个动作 · 约 ${phaseMin(COOL[k])} 分钟 · ${floorNote(COOL[k])}`,COOL[k].map(m=>m.gif),moveGrid(COOL[k])));
 }
 // Foldable section; folded state is remembered on this device, everything starts open.
 const FOLD_KEY='home-workout-folded';
@@ -440,7 +442,7 @@ function section(id,title,meta,gifs,body){
 function moveGrid(list){
   const g=document.createElement('div');g.className='mg';
   g.innerHTML=list.map(m=>`<article class="mv"><img src="${gif(m.gif)}" alt="${esc(m.name)}" loading="lazy" width="300" height="225">
-    <div class="mv-t"><span class="nm">${esc(m.name)}</span><span class="dose">${m.sides?'每侧 ':''}${m.sec} 秒</span></div><p>${esc(m.cue)}</p></article>`).join('');
+    <div class="mv-t"><span class="nm">${esc(m.name)}${m.floor?'<em class="mat">垫子</em>':''}</span><span class="dose">${m.sides?'每侧 ':''}${m.sec} 秒</span></div><p>${esc(m.cue)}</p></article>`).join('');
   return g;
 }
 function exCard(ex){
@@ -567,7 +569,10 @@ function runItem(){
     const m=it.m,first=it.idx===1;
     $('fName').textContent=m.name;$('fSet').textContent=`${it.phase} ${it.idx} / ${it.n}`;$('fBig').className='f-big rest';
     $('fPhase').textContent=m.sides?`每侧 ${m.sec} 秒`:`${m.sec} 秒`;$('fCue').textContent=m.cue;showImg(m.gif);
-    let pre=3;$('fBig').innerHTML=secs(pre);say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+m.name);
+    const prev=F.queue[F.i-1],toMat=m.floor&&!(prev&&prev.type==='timed'&&prev.m.floor);
+    let pre=toMat?10:3;$('fBig').innerHTML=secs(pre);
+    if(toMat)$('fPhase').textContent='铺好垫子,接下来都在垫子上做';
+    say((first?(it.phase==='热身'?'先热身,':'练完了,放松一下,'):'')+(toMat?'铺好垫子,':'')+m.name);
     tick(()=>{pre--;if(pre>0){$('fBig').innerHTML=secs(pre);return;}
       clearInterval(F.timer);beep(1320,0.12);
       const total=m.sec*(m.sides?2:1);let left=total,s=m.sec;$('fBig').innerHTML=secs(s);
