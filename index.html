@@ -75,9 +75,8 @@
   .hero.rest{background:linear-gradient(140deg,#B7A895,#CDBFAE)}
 
   /* exercises */
-  .exs h2{margin:4px 0 10px;font-size:15px}
   .xl{display:grid;gap:10px}
-  @media (min-width:960px){.exs h2{display:none}.xl{grid-template-columns:1fr 1fr;gap:14px}}
+  @media (min-width:960px){.xl{grid-template-columns:1fr 1fr;gap:14px}}
   .xc{background:var(--card);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
   .xc.open{grid-column:1/-1}
   .xh{cursor:pointer;user-select:text;-webkit-user-select:text;display:grid;grid-template-columns:62px minmax(0,1fr) auto;grid-template-areas:"img nm rx" "img br rx";column-gap:12px;row-gap:2px;align-items:center;padding:8px 12px 8px 8px;width:100%;text-align:left}
@@ -112,20 +111,27 @@
   .pair span{text-align:center;font-size:12px;margin:2px 0 6px}
   .stills a{display:inline-block;margin-top:8px;color:var(--acc-ink);font-weight:600;text-decoration:none}
 
-  /* warm-up / cool-down cards */
-  .wc{grid-column:1/-1}
-  .wh{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;cursor:pointer;user-select:text;-webkit-user-select:text}
-  .thumbs{display:flex;flex:0 0 auto}
-  .thumbs img{width:40px;height:40px;border-radius:10px;border:2px solid var(--card);background:#fff;margin-left:-12px;box-shadow:0 0 0 1px var(--line)}
+  /* foldable sections */
+  #exList{display:flex;flex-direction:column;gap:16px}
+  .ph-h{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px 14px;cursor:pointer;user-select:text;-webkit-user-select:text}
+  .ph-t{flex:1;min-width:0}.ph-t b{display:block;font-size:16px}.ph-t small{color:var(--mute);font-size:12.5px}
+  .ph-h .tg{color:var(--acc-ink);font-size:13px;font-weight:600;white-space:nowrap}
+  .thumbs{display:none;flex:0 0 auto}
+  .ph.fold .thumbs{display:flex}
+  .thumbs img{width:36px;height:36px;border-radius:9px;border:2px solid var(--card);background:#fff;margin-left:-10px;box-shadow:0 0 0 1px var(--line)}
   .thumbs img:first-child{margin-left:0}
-  .wt{flex:1;min-width:0}.wt b{display:block;font-size:15.5px}.wt small{color:var(--mute);font-size:12.5px}
-  .wh .more{display:inline-block;color:var(--acc-ink);font-size:13px;font-weight:600;white-space:nowrap}
-  .wl{display:none;border-top:1px solid var(--line);padding:12px;gap:10px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));background:#FFFCF8}
-  .wc.open .wl{display:grid}
-  .wm{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:center;background:var(--card);border-radius:14px;padding:6px}
-  .wm img{width:76px;height:76px;border-radius:10px;border:1px solid var(--line);background:#fff}
-  .wm b{display:block;font-size:14.5px}.wm span{display:block;color:var(--acc-ink);font-weight:600;font-size:12.5px}.wm small{display:block;color:var(--mute);font-size:12.5px;line-height:1.45}
   @media (max-width:520px){.thumbs img:nth-child(n+4){display:none}}
+  .ph-b{margin-top:10px}
+  .ph.fold .ph-b{display:none}
+  .mg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  @media (min-width:700px){.mg{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+  .mv{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:8px 8px 12px;display:flex;flex-direction:column}
+  .mv img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)}
+  .mv-t{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:8px 4px 2px;flex-wrap:wrap}
+  .mv .nm{font-weight:700;font-size:15px}
+  .mv .dose{color:var(--acc-ink);font-weight:700;font-size:13px;white-space:nowrap}
+  .mv p{margin:0 4px;color:var(--mute);font-size:12.5px;line-height:1.45}
+  @media (min-width:960px){.mv .nm{font-size:16.5px}.mv p{font-size:13px}}
   .segs i.w{background:#F6EBDD}
   .segs i.w.d,.segs i.w.c::after{background:#FFB59E}
 
@@ -227,8 +233,7 @@
     <section class="hero" id="hero"></section>
 
     <section class="exs" aria-label="动作">
-      <h2>动作</h2>
-      <div class="xl" id="exList"></div>
+      <div id="exList"></div>
     </section>
 
     <section class="cal panel" aria-label="打卡">
@@ -412,32 +417,44 @@ function renderHero(){
 function renderEx(){
   const k=WEEK[selected].k, box=$('exList');box.innerHTML='';
   if(k==='rest'){box.innerHTML='<div class="restcard">周日休息。明天周一是上肢日。</div>';return;}
-  if(prefs.warm)box.appendChild(phaseCard('练前热身',WARM[k]));
-  EX[k].forEach(ex=>{
-    const rx=ex.hold?`${ex.sets}×${ex.hold}″`:`${ex.sets}×${ex.anims.map(a=>a.reps).join('+')}`, side=sideOf(ex);
-    const c=document.createElement('article');c.className='xc';
-    c.innerHTML=`<div class="xh" role="button" tabindex="0" aria-expanded="false"><img src="${gif(ex.anims[0].gif)}" alt="${esc(ex.name)}" loading="lazy" width="190" height="190">
-      <span class="nm">${esc(ex.name)}</span><span class="rx">${rx}${side?`<small>${side}</small>`:''}</span>
-      <span class="br">${esc(ex.brief)}</span><span class="more">动作详解 →</span></div>
-      <div class="xd"><div><h4>要点</h4><ul>${ex.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>
-      <h4>常见错误</h4><ul>${ex.mistakes.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>
-      <div class="stills"><div class="pair"><img src="${still(ex.anims[0].gif,'a')}" alt="起始位" loading="lazy"><img src="${still(ex.anims[0].gif,'b')}" alt="终点位" loading="lazy"><span>起始位</span><span>终点位</span></div>
-      ${esc(ex.note)}<br><a target="_blank" rel="noopener" href="https://search.bilibili.com/all?keyword=${encodeURIComponent(ex.search)}">在 B 站看真人示范 ↗</a></div></div>`;
-    const hd=c.querySelector('.xh');
-    const flip=()=>{const o=c.classList.toggle('open');hd.setAttribute('aria-expanded',o);const m=c.querySelector('.more');if(m)m.textContent=o?'收起 ↑':'动作详解 →';};
-    // Dragging to select text must not toggle the card.
-    hd.onclick=()=>{if(String(getSelection()||'').trim())return;flip();};
-    hd.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}};
-    box.appendChild(c);
-  });
-  if(prefs.cool)box.appendChild(phaseCard('练后放松',COOL[k]));
+  const list=EX[k], sets=list.reduce((t,e)=>t+e.sets,0);
+  if(prefs.warm)box.appendChild(section('warm','练前热身',`${WARM[k].length} 个动作 · 约 ${phaseMin(WARM[k])} 分钟 · 不用躺下`,WARM[k].map(m=>m.gif),moveGrid(WARM[k])));
+  const grid=document.createElement('div');grid.className='xl';list.forEach(ex=>grid.appendChild(exCard(ex)));
+  box.appendChild(section('main','正式训练',`${list.length} 个动作 · ${sets} 组 · 约 ${minutes(list)} 分钟`,list.map(e=>e.anims[0].gif),grid));
+  if(prefs.cool)box.appendChild(section('cool','练后放松',`${COOL[k].length} 个动作 · 约 ${phaseMin(COOL[k])} 分钟 · 不用躺下`,COOL[k].map(m=>m.gif),moveGrid(COOL[k])));
 }
-function phaseCard(title,list){
-  const c=document.createElement('article');c.className='xc wc';
-  c.innerHTML=`<div class="wh" role="button" tabindex="0" aria-expanded="false"><span class="thumbs">${list.map(m=>`<img src="${gif(m.gif)}" alt="" loading="lazy">`).join('')}</span>
-    <span class="wt"><b>${title}</b><small>${list.length} 个动作 · 约 ${phaseMin(list)} 分钟 · 不用躺下</small></span><span class="more">展开 ↓</span></div>
-    <div class="wl">${list.map(m=>`<div class="wm"><img src="${gif(m.gif)}" alt="${esc(m.name)}" loading="lazy"><div><b>${esc(m.name)}</b><span>${m.sides?'每侧 ':''}${m.sec} 秒</span><small>${esc(m.cue)}</small></div></div>`).join('')}</div>`;
-  const hd=c.querySelector('.wh'),flip=()=>{const o=c.classList.toggle('open');hd.setAttribute('aria-expanded',o);c.querySelector('.more').textContent=o?'收起 ↑':'展开 ↓';};
+// Foldable section; folded state is remembered on this device, everything starts open.
+const FOLD_KEY='home-workout-folded';
+let folded=(()=>{try{return JSON.parse(localStorage.getItem(FOLD_KEY))||{};}catch(e){return {};}})();
+function section(id,title,meta,gifs,body){
+  const sec=document.createElement('section');sec.className='ph'+(folded[id]?' fold':'');
+  sec.innerHTML=`<div class="ph-h" role="button" tabindex="0" aria-expanded="${!folded[id]}"><span class="ph-t"><b>${title}</b><small>${meta}</small></span>
+    <span class="thumbs">${gifs.map(g=>`<img src="${gif(g)}" alt="" loading="lazy">`).join('')}</span><span class="tg">${folded[id]?'展开 ↓':'收起 ↑'}</span></div>`;
+  const b=document.createElement('div');b.className='ph-b';b.appendChild(body);sec.appendChild(b);
+  const hd=sec.querySelector('.ph-h'),flip=()=>{const f=sec.classList.toggle('fold');folded[id]=f;try{localStorage.setItem(FOLD_KEY,JSON.stringify(folded));}catch(e){}
+    hd.setAttribute('aria-expanded',!f);sec.querySelector('.tg').textContent=f?'展开 ↓':'收起 ↑';};
+  hd.onclick=()=>{if(String(getSelection()||'').trim())return;flip();};
+  hd.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}};
+  return sec;
+}
+function moveGrid(list){
+  const g=document.createElement('div');g.className='mg';
+  g.innerHTML=list.map(m=>`<article class="mv"><img src="${gif(m.gif)}" alt="${esc(m.name)}" loading="lazy" width="300" height="225">
+    <div class="mv-t"><span class="nm">${esc(m.name)}</span><span class="dose">${m.sides?'每侧 ':''}${m.sec} 秒</span></div><p>${esc(m.cue)}</p></article>`).join('');
+  return g;
+}
+function exCard(ex){
+  const rx=ex.hold?`${ex.sets}×${ex.hold}″`:`${ex.sets}×${ex.anims.map(a=>a.reps).join('+')}`, side=sideOf(ex);
+  const c=document.createElement('article');c.className='xc';
+  c.innerHTML=`<div class="xh" role="button" tabindex="0" aria-expanded="false"><img src="${gif(ex.anims[0].gif)}" alt="${esc(ex.name)}" loading="lazy" width="190" height="190">
+    <span class="nm">${esc(ex.name)}</span><span class="rx">${rx}${side?`<small>${side}</small>`:''}</span>
+    <span class="br">${esc(ex.brief)}</span><span class="more">动作详解 →</span></div>
+    <div class="xd"><div><h4>要点</h4><ul>${ex.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>
+    <h4>常见错误</h4><ul>${ex.mistakes.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>
+    <div class="stills"><div class="pair"><img src="${still(ex.anims[0].gif,'a')}" alt="起始位" loading="lazy"><img src="${still(ex.anims[0].gif,'b')}" alt="终点位" loading="lazy"><span>起始位</span><span>终点位</span></div>
+    ${esc(ex.note)}<br><a target="_blank" rel="noopener" href="https://search.bilibili.com/all?keyword=${encodeURIComponent(ex.search)}">在 B 站看真人示范 ↗</a></div></div>`;
+  const hd=c.querySelector('.xh');
+  const flip=()=>{const o=c.classList.toggle('open');hd.setAttribute('aria-expanded',o);const m=c.querySelector('.more');if(m)m.textContent=o?'收起 ↑':'动作详解 →';};
   hd.onclick=()=>{if(String(getSelection()||'').trim())return;flip();};
   hd.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}};
   return c;

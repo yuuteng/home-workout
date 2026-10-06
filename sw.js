@@ -1,5 +1,5 @@
 // Offline: the app shell and images are precached; Google Fonts are cached on first use.
-const VERSION = "v5";
+const VERSION = "v6";
 const SHELL = "hw-shell-" + VERSION, FONTS = "hw-fonts";
 const GIFS = ["0mB6wHO", "1jXLYEw", "1kB3Wmk", "3uj0Ozg", "9E25EOx", "A6wtbuL", "BJ0Hz5L", "C5jncD2", "DFGXwZr", "GSDioYu", "I4hDWkc", "NbVPDMW", "PdmaD0N", "QChZi3x", "QY39eBr", "VBAWRPG", "X7jbxra", "jV65tKx", "m0tCHqc", "rR0LJzx", "rearfly", "uL9CsKm", "uOV3Itw", "xifhB5W", "yn8yg1r"];
 const STILLS = ["1kB3Wmk", "9E25EOx", "A6wtbuL", "BJ0Hz5L", "I4hDWkc", "NbVPDMW", "PdmaD0N", "VBAWRPG", "rR0LJzx", "rearfly", "yn8yg1r"];
