@@ -1,5 +1,5 @@
 // Offline: the app shell and images are precached; Google Fonts are cached on first use.
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = "hw-shell-" + VERSION, FONTS = "hw-fonts";
 const IDS = ["I4hDWkc","BJ0Hz5L","A6wtbuL","rearfly","NbVPDMW","PdmaD0N","yn8yg1r","rR0LJzx","SSsBDwB","1kB3Wmk","VBAWRPG"];
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"]
