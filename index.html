@@ -129,7 +129,6 @@
   .mv img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)}
   .mv-t{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:8px 4px 2px;flex-wrap:wrap}
   .mv .nm{font-weight:700;font-size:15px}
-  .mv .mat{font-style:normal;font-size:11px;font-weight:600;color:var(--mute);border:1px solid var(--line-2);border-radius:99px;padding:0 6px;margin-left:6px;vertical-align:2px}
   .mv .dose{color:var(--acc-ink);font-weight:700;font-size:13px;white-space:nowrap}
   .mv p{margin:0 4px;color:var(--mute);font-size:12.5px;line-height:1.45}
   @media (min-width:960px){.mv .nm{font-size:16.5px}.mv p{font-size:13px}}
@@ -442,7 +441,7 @@ function section(id,title,meta,gifs,body){
 function moveGrid(list){
   const g=document.createElement('div');g.className='mg';
   g.innerHTML=list.map(m=>`<article class="mv"><img src="${gif(m.gif)}" alt="${esc(m.name)}" loading="lazy" width="300" height="225">
-    <div class="mv-t"><span class="nm">${esc(m.name)}${m.floor?'<em class="mat">垫子</em>':''}</span><span class="dose">${m.sides?'每侧 ':''}${m.sec} 秒</span></div><p>${esc(m.cue)}</p></article>`).join('');
+    <div class="mv-t"><span class="nm">${esc(m.name)}</span><span class="dose">${m.sides?'每侧 ':''}${m.sec} 秒</span></div><p>${esc(m.cue)}</p></article>`).join('');
   return g;
 }
 function exCard(ex){
